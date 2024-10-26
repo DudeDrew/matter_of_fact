@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Did You Know?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h1 {
+      color: #FFA500;
+    }
+    p {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Here's Something You Probably Didn't Know!:</h1>
+  <p id="factDisplay">Fetching a random fact...</p>
+
+  <script>
+    async function fetchAndDisplayRandomFact() {
+      try {
+        // Fetch the facts.txt file from the repository
+        const response = await fetch('facts.txt'); // Make sure this file is in the same directory as index.html
+        if (!response.ok) {
+          throw new Error('Failed to load the facts.');
+        }
+
+        // Get the text content from the file
+        const factsText = await response.text();
+
+        // Split the text by newline to get an array of facts
+        const factsArray = punsText.split('\n').filter(Boolean); // Filter removes any empty lines
+
+        // Select a random fact from the array
+        const randomFact = factsArray[Math.floor(Math.random() * factsArray.length)];
+
+        // Display the random fact in the <p> element with id="factDisplay"
+        document.getElementById('punDisplay').innerText = randomFact;
+
+      } catch (error) {
+        // If there's an error, display it
+        document.getElementById('factDisplay').innerText = 'Error fetching fact: ' + error.message;
+      }
+    }
+
+    // Run the function when the page loads
+    window.onload = fetchAndDisplayRandomFact;
+  </script>
+
+</body>
+</html>
